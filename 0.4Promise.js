@@ -57,6 +57,7 @@ MyPromise.prototype.then = function (onFulfilled, onRejected) {
                     x.then(resolve, reject)
                 }
                 // onFulfilled不是promise，则直接使用以前的值
+                // 对应阮一峰文档中所说：then方法的第一个参数，是resolved状态的回调函数
                 resolve(x)
             })
         })
@@ -68,7 +69,13 @@ MyPromise.prototype.then = function (onFulfilled, onRejected) {
             if (x instanceof MyPromise) {
                 x.then(resolve, reject)
             }
-            resolve(x)
+        })
+    }
+
+    // 如果仍是pending状态，需要
+    if (_this.currentState === PENDING) {
+        return promise2 = new MyPromise((resolve, reject) => {
+            _this.onRejectedCallbacks.push()
         })
     }
 
